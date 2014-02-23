@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<!--
+ * id 命名用underline “_”, class 命名用middleline "-" 
+ -->
+<html>
+    <head>
+        <meta http-equiv="content-type"  content="text/html; charset=utf-8" />
+        <title>选词预览_匠心网络</title>
+        <link rel="stylesheet" type="text/css" href="./css/reset.css">
+        <link rel="stylesheet" type="text/css" href="./css/index.css">
+        <link rel="stylesheet" type="text/css" href="./css/jquery-ui-1.9.2.custom.min.css">
+    </head>
+    <body>
+        <header>
+            <div id="header" class="header" >
+                <h1>
+                    <a href="http://www.jiangxintech.com">
+                        <img src="./images/logo.png" alt="logo" title="杭州匠心网络" />
+                    </a>
+                    <span>匠心直通车&nbsp;&nbsp;选词预览</span>
+                </h1>
+                <div class="warn-wrap">
+                    <ul class="warn">
+                        <li>说明： 请选择店铺中的一款宝贝，并复制宝贝链接粘贴到输入框， 再点击“选词预览”。</li>
+                        <li>注意： 本软件仅供选词效果预览，暂时免费无限制使用。 同时因为词量可能很大，强烈建议使用谷歌浏览器。</li>
+                    </ul>
+                </div>
+                <div>
+                    <fieldset class="search-wrap">
+                        <form id="search_form" class="search-form">
+                            <label for="search_box"> 宝贝链接:</label>
+                            <input id="search_box" class="search-box" type="text">
+                            <input id="select_view_btn" type="button" value="选词预览&nbsp;&gt;&gt;" class="btn" />
+                        </form>
+                    </fieldset>
+                </div>
+            </div>
+        </header>
+        <section class="keywords-main">
+            <div id="item_wrap" class="none">
+                <!-- 宝贝属性 -->
+                <div id="item" class="item"></div>
+                <!-- 宝贝属性 结束 -->
+
+                <!-- 关键词选择模式 -->
+                <div id="select_keywords_module" class="select-keywords-module p-relative h200">
+                    <div id="tab_top" class="tab-top"></div>
+
+                    <div id="tab_body" class="tab-body w100per">
+                        <div>
+                            <form id="quick_select" class="quick-select mlrauto w70per cf">
+                                <h2 id="quick_tab" class="toggle-tab bgwhite w90 h40 center">快速选词</h2>
+                                <div id="quick_tab_bd" class="tab-bd w70per mlrauto">
+                                    <div class="mlrauto cf">
+                                        <h3 class="fl">选词模式:</h3>
+                                        <div class="mrg1em">
+                                            <input class="ml15" type="radio" name="select_module" checked="true"/>&nbsp;<span>系统默认</span>
+                                            <input class="ml15" type="radio" name="select_module" />&nbsp;<span>精准模式</span>
+                                            <input class="ml15" type="radio" name="select_module" />&nbsp;<span>流量模式</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mlrauto">
+                                        <input id="quick_select_btn" class="btn mrg1em" type="button" value="开始选词" />
+                                        <input id="quick_export_btn" class="export btn mrg1em" type="button" value="导出Excel" />
+                                        <input id="quick_copy_btn" class="copy btn mrg1em" type="button" value="复制关键词" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div>
+                            <form id="precise_select" class="precise-select w100per cf">
+                                <h2 id="precise_tab" class="toggle-tab lf90 white w90 h40 center">精准选词</h2>
+                                <div id="precise_tab_bd" class="tab-bd w70per mlrauto none">
+                                    <div class="main-words cf mlrauto">
+                                        <h3 class="fl"><label for="main_word">含核心词:</label></h3>
+                                        <input id="main_word" class="w200 ml15" type="text" />
+                                        <input id="precise_select_btn" class="btn" type="button" value="精确选词"/>
+                                        <input id="precise_export_btn" class="export btn" type="button" value="导出Excel" />
+                                        <input id="precise_copy_btn" class="copy btn" type="button" value="复制关键词" />
+                                    </div>    
+                                    <div id="guess_for_you" class="guess-for-you fl">
+                                        <h3 class="fl">猜你想淘:</h3>
+                                        <div id="association" class="fl dotted-border mb15 ml15"></div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- 关键词选择模式 结束 -->
+            </div>
+
+            <!-- 快速淘词  数据显示模块*******************************************************-->
+            <div id="list_wrap_quick" class="none">
+
+                <!-- 关键词列表 -->
+                <div id="quick_keywords_list" class="keywords-list ">
+                    <div id="quick_keywords_list_top" class="keywords-list-top">
+                        <div id="quick_table_selected_stats" class="list-top-title">
+                            <span>关键词列表:已选中<span>300</span>个关键词</span>
+                        </div>
+                    </div>
+                    <div id="quick_keywords_table_wrap">
+                        <table id="quick_keywords_table" class="keywords-table tbl w100per ">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <input id="quick_all_select" class="all-select" type="checkbox" />
+                                    </th>
+                                    <th>关键词</th>
+                                    <th>市场均价</th>
+                                    <th>展现指数</th>
+                                    <th>点击指数</th>
+                                    <th>竞争度</th>
+                                    <th>匹配度</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- 关键词列表 结束 -->
+
+                <!-- 关键词选择器 +++++keywords_selector -->
+                <div id="quick_keywords_selector" class="keywords-selector">
+                    <h2 class="white">选词器<span class="fs12">(拉动滑竿可过滤关键)</span></h2>
+                    <div class="ml15 fblack mb15">
+                        <span>候选词总数：<span class="bold">388</span>个 &nbsp;&nbsp;已选中：<span class="red">88</span>个</span>
+                    </div>
+                    <div id="quick_sliders" class="sliders">
+                        <!-- 匹配度 -->
+                        <div class="slider-wrap">
+                            <h3 class="fl">匹配度</h3>
+                            <div class="slider-main fl h40 pd-top20 pd-left10">
+                                <div class="w300">
+                                    <div id="quick_slider_match" class="slider slider-match"></div>
+                                    <div class="rule p-relative">
+                                        <span class="p-absolute left0 fs5">|</span>
+                                        <span class="p-absolute left0 top10">400</span>
+                                        <span class="p-absolute left25 fs5">|</span>
+                                        <span class="p-absolute left25 top10">550</span>
+                                        <span class="p-absolute left50 fs5">|</span>
+                                        <span class="p-absolute left50 top10">700</span>
+                                        <span class="p-absolute left75 fs5">|</span>
+                                        <span class="p-absolute left75 top10">850</span>
+                                        <span class="p-absolute left100 fs5">|</span>
+                                        <span class="p-absolute left100 top10">1000</span>
+                                    </div>
+                                </div>
+                                <div class="min-max w300 h25 p-relative">
+                                    <input class="show-min noborder w60 p-absolute top-35" type="text" value="588"/>
+                                    <input class="show-max noborder w60 p-absolute top-35" type="text" value="1000"/>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 匹配度 结束 -->
+
+                        <!-- 竞争度 -->
+                        <div class="slider-wrap">
+                            <h3 class="fl">竞争度</h3>
+                            <div class="slider-main fl h40 pd-top20 pd-left10">
+                                <div class="w300">
+                                    <div id="quick_slider_compete" class="slider slider-compete"></div>
+                                    <div class="rule p-relative">
+                                        <span class="p-absolute left0 fs5">|</span>
+                                        <span class="p-absolute left0 top10">1</span>
+                                        <span class="p-absolute left25 fs5">|</span>
+                                        <span class="p-absolute left25 top10">400</span>
+                                        <span class="p-absolute left50 fs5">|</span>
+                                        <span class="p-absolute left50 top10">800</span>
+                                        <span class="p-absolute left75 fs5">|</span>
+                                        <span class="p-absolute left75 top10">1200</span>
+                                        <span class="p-absolute left100 fs5">|</span>
+                                        <span class="p-absolute left100 top10">1600</span>
+                                    </div>
+                                </div>
+                                <div class="min-max w300 h25 p-relative">
+                                    <input class="show-min noborder w60 p-absolute top-35" type="text" value="567"/>
+                                    <input class="show-max noborder w60 p-absolute top-35" type="text" value="1600"/>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 竞争度 结束-->
+
+                        <!-- 点击指数 -->
+                        <div class="slider-wrap">
+                            <h3 class="fl">点击指数</h3>
+                            <div class="slider-main fl h40 pd-top20 pd-left10">
+                                <div class="w300">
+                                    <div id="quick_slider_click" class="slider slider-click"></div>
+                                    <div class="rule p-relative">
+                                        <span class="p-absolute left0 fs5">|</span>
+                                        <span class="p-absolute left0 top10">0</span>
+                                        <span class="p-absolute left25 fs5">|</span>
+                                        <span class="p-absolute left25 top10">1500</span>
+                                        <span class="p-absolute left50 fs5">|</span>
+                                        <span class="p-absolute left50 top10">3000</span>
+                                        <span class="p-absolute left75 fs5">|</span>
+                                        <span class="p-absolute left75 top10">4500</span>
+                                        <span class="p-absolute left100 fs5">|</span>
+                                        <span class="p-absolute left100 top10">6000</span>
+                                    </div>
+                                </div>
+                                <div class="min-max w300 h25 p-relative">
+                                    <input class="show-min noborder w60 p-absolute top-35" type="text" value="699"/>
+                                    <input class="show-max noborder w60 p-absolute top-35" type="text" value="6000"/>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 点击指数 结束-->
+
+                        <!-- 展现指数 -->
+                        <div class="slider-wrap">
+                            <h3 class="fl">展现指数</h3>
+                            <div class="slider-main fl h40 pd-top20 pd-left10">
+                                <div class="w300">
+                                    <div id="quick_slider_show" class="slider slider-show"></div>
+                                    <div class="rule p-relative">
+                                        <span class="p-absolute left0 fs5">|</span>
+                                        <span class="p-absolute left0 top10">0</span>
+                                        <span class="p-absolute left25 fs5">|</span>
+                                        <span class="p-absolute left25 top10">250000</span>
+                                        <span class="p-absolute left50 fs5">|</span>
+                                        <span class="p-absolute left50 top10">500000</span>
+                                        <span class="p-absolute left75 fs5">|</span>
+                                        <span class="p-absolute left75 top10">750000</span>
+                                        <span class="p-absolute left100 fs5">|</span>
+                                        <span class="p-absolute left100 top10">1000000</span>
+                                    </div>
+                                </div>
+                                <div class="min-max w300 h25 p-relative">
+                                    <input class="show-min noborder w60 p-absolute top-35" type="text" value="5880"/>
+                                    <input class="show-max noborder w60 p-absolute top-35" type="text" value="1000000"/>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 展现指数 结束-->
+
+                        <!-- 市场均价 -->
+                        <div class="slider-wrap">
+                            <h3 class="fl">市场均价</h3>
+                            <div class="slider-main fl h40 pd-top20 pd-left10">
+                                <div class="w300">
+                                    <div id="quick_slider_price" class="slider slider-price"></div>
+                                    <div class="rule p-relative">
+                                        <span class="p-absolute left0 fs5">|</span>
+                                        <span class="p-absolute left0 top10">0.05</span>
+                                        <span class="p-absolute left25 fs5">|</span>
+                                        <span class="p-absolute left25 top10">2</span>
+                                        <span class="p-absolute left50 fs5">|</span>
+                                        <span class="p-absolute left50 top10">4</span>
+                                        <span class="p-absolute left75 fs5">|</span>
+                                        <span class="p-absolute left75 top10">6</span>
+                                        <span class="p-absolute left100 fs5">|</span>
+                                        <span class="p-absolute left100 top10">8</span>
+                                    </div>
+                                </div>
+                                <div class="min-max w300 h25 p-relative">
+                                    <input class="show-min noborder w60 p-absolute top-35" type="text" value="0.5"/>
+                                    <input class="show-max noborder w60 p-absolute top-35" type="text" value="8"/>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 市场均价 结束-->
+                    </div>
+                    <div>
+                        <div class="fl ml15">
+                            <div class="mb15">
+                                <label for="quick_search_with">包含关键词</label>
+                                <input id="quick_search_with" class="h25 w200" type="text" />
+                            </div>
+                            <div class="mb15">
+                                <label for="quick_search_without">不含关键词</label>
+                                <input id="quick_search_without" class="h25 w200" type="text" />
+                            </div>
+                        </div>
+                        <div class="fl fs18 white mrg1em">
+                            <input id="quick_selector_search" class="btn h50" type="button" value="搜索" />
+                        </div>
+                    </div>
+                </div>
+                <!-- 关键词选择器 结束 -->
+            </div>
+            <!-- 快速淘词 数据显示模块  end *******************************************************-->
+
+            <!-- 精准淘词 数据显示模块  start *******************************************************-->
+            <div id="list_wrap_precise" class="none">
+
+                <!-- 关键词列表 -->
+                <div id="precise_keywords_list" class="keywords-list ">
+                    <div id="precise_keywords_list_top">
+                        <div id="precise_table_selected_stats" class="title">
+                            <span>关键词列表:已选中<span>300</span>个关键词</span>
+                        </div>
+                    </div>
+                    <div id="precise_keywords_table_wrap">
+                        <table id="precise_keywords_table" class="keywords-table tbl w100per ">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <input id="precise_all_select" type="checkbox" />
+                                    </th>
+                                    <th>关键词</th>
+                                    <th>市场均价</th>
+                                    <th>展现指数</th>
+                                    <th>点击指数</th>
+                                    <th>竞争度</th>
+                                    <th>匹配度</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- 关键词列表 结束 -->
+
+                <!-- 关键词选择器 +++++keywords_selector -->
+                <div id="precise_keywords_selector" class="keywords-selector">
+                    <h2 class="white">选词器<span class="fs12">(拉动滑竿可过滤关键)</span></h2>
+                    <div class="ml15 fblack mb15">
+                        <span>候选词总数：<span class="bold">388</span>个 &nbsp;&nbsp;已选中：<span class="red">88</span>个</span>
+                    </div>
+                    <div id="precise_sliders" class="sliders">
+                        <!-- 匹配度 -->
+                        <div class="slider-wrap">
+                            <h3 class="fl">匹配度</h3>
+                            <div class="slider-main fl h40 pd-top20 pd-left10">
+                                <div class="w300">
+                                    <div id="precise_slider_match" class="slider slider-match"></div>
+                                    <div class="rule p-relative">
+                                        <span class="p-absolute left0 fs5">|</span>
+                                        <span class="p-absolute left0 top10">400</span>
+                                        <span class="p-absolute left25 fs5">|</span>
+                                        <span class="p-absolute left25 top10">550</span>
+                                        <span class="p-absolute left50 fs5">|</span>
+                                        <span class="p-absolute left50 top10">700</span>
+                                        <span class="p-absolute left75 fs5">|</span>
+                                        <span class="p-absolute left75 top10">850</span>
+                                        <span class="p-absolute left100 fs5">|</span>
+                                        <span class="p-absolute left100 top10">1000</span>
+                                    </div>
+                                </div>
+                                <div class="min-max w300 h25 p-relative">
+                                    <input class="show-min noborder w60 p-absolute top-35" type="text" value="588"/>
+                                    <input class="show-max noborder w60 p-absolute top-35" type="text" value="1000"/>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 匹配度 结束 -->
+
+                        <!-- 竞争度 -->
+                        <div class="slider-wrap">
+                            <h3 class="fl">竞争度</h3>
+                            <div class="slider-main fl h40 pd-top20 pd-left10">
+                                <div class="w300">
+                                    <div id="precise_slider_compete" class="slider slider-compete"></div>
+                                    <div class="rule p-relative">
+                                        <span class="p-absolute left0 fs5">|</span>
+                                        <span class="p-absolute left0 top10">1</span>
+                                        <span class="p-absolute left25 fs5">|</span>
+                                        <span class="p-absolute left25 top10">400</span>
+                                        <span class="p-absolute left50 fs5">|</span>
+                                        <span class="p-absolute left50 top10">800</span>
+                                        <span class="p-absolute left75 fs5">|</span>
+                                        <span class="p-absolute left75 top10">1200</span>
+                                        <span class="p-absolute left100 fs5">|</span>
+                                        <span class="p-absolute left100 top10">1600</span>
+                                    </div>
+                                </div>
+                                <div class="min-max w300 h25 p-relative">
+                                    <input class="show-min noborder w60 p-absolute top-35" type="text" value="567"/>
+                                    <input class="show-max noborder w60 p-absolute top-35" type="text" value="1600"/>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 竞争度 结束-->
+
+                        <!-- 点击指数 -->
+                        <div class="slider-wrap">
+                            <h3 class="fl">点击指数</h3>
+                            <div class="precise_slider-main fl h40 pd-top20 pd-left10">
+                                <div class="w300">
+                                    <div id="slider_click" class="slider slider-click"></div>
+                                    <div class="rule p-relative">
+                                        <span class="p-absolute left0 fs5">|</span>
+                                        <span class="p-absolute left0 top10">0</span>
+                                        <span class="p-absolute left25 fs5">|</span>
+                                        <span class="p-absolute left25 top10">1500</span>
+                                        <span class="p-absolute left50 fs5">|</span>
+                                        <span class="p-absolute left50 top10">3000</span>
+                                        <span class="p-absolute left75 fs5">|</span>
+                                        <span class="p-absolute left75 top10">4500</span>
+                                        <span class="p-absolute left100 fs5">|</span>
+                                        <span class="p-absolute left100 top10">6000</span>
+                                    </div>
+                                </div>
+                                <div class="min-max w300 h25 p-relative">
+                                    <input class="show-min noborder w60 p-absolute top-35" type="text" value="699"/>
+                                    <input class="show-max noborder w60 p-absolute top-35" type="text" value="6000"/>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 点击指数 结束-->
+
+                        <!-- 展现指数 -->
+                        <div class="slider-wrap">
+                            <h3 class="fl">展现指数</h3>
+                            <div class="slider-main fl h40 pd-top20 pd-left10">
+                                <div class="w300">
+                                    <div id="precise_slider_show" class="slider slider-show"></div>
+                                    <div class="rule p-relative">
+                                        <span class="p-absolute left0 fs5">|</span>
+                                        <span class="p-absolute left0 top10">0</span>
+                                        <span class="p-absolute left25 fs5">|</span>
+                                        <span class="p-absolute left25 top10">250000</span>
+                                        <span class="p-absolute left50 fs5">|</span>
+                                        <span class="p-absolute left50 top10">500000</span>
+                                        <span class="p-absolute left75 fs5">|</span>
+                                        <span class="p-absolute left75 top10">750000</span>
+                                        <span class="p-absolute left100 fs5">|</span>
+                                        <span class="p-absolute left100 top10">1000000</span>
+                                    </div>
+                                </div>
+                                <div class="min-max w300 h25 p-relative">
+                                    <input class="show-min noborder w60 p-absolute top-35" type="text" value="5880"/>
+                                    <input class="show-max noborder w60 p-absolute top-35" type="text" value="1000000"/>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 展现指数 结束-->
+
+                        <!-- 市场均价 -->
+                        <div class="slider-wrap">
+                            <h3 class="fl">市场均价</h3>
+                            <div class="slider-main fl h40 pd-top20 pd-left10">
+                                <div class="w300">
+                                    <div id="precise_slider_price" class="slider slider-price"></div>
+                                    <div class="rule p-relative">
+                                        <span class="p-absolute left0 fs5">|</span>
+                                        <span class="p-absolute left0 top10">0.05</span>
+                                        <span class="p-absolute left25 fs5">|</span>
+                                        <span class="p-absolute left25 top10">2</span>
+                                        <span class="p-absolute left50 fs5">|</span>
+                                        <span class="p-absolute left50 top10">4</span>
+                                        <span class="p-absolute left75 fs5">|</span>
+                                        <span class="p-absolute left75 top10">6</span>
+                                        <span class="p-absolute left100 fs5">|</span>
+                                        <span class="p-absolute left100 top10">8</span>
+                                    </div>
+                                </div>
+                                <div class="min-max w300 h25 p-relative">
+                                    <input class="show-min noborder w60 p-absolute top-35" type="text" value="0.5"/>
+                                    <input class="show-max noborder w60 p-absolute top-35" type="text" value="8"/>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 市场均价 结束-->
+                    </div>
+                    <div>
+                        <div class="fl ml15">
+                            <div class="mb15">
+                                <label for="precise_search_with">包含关键词</label>
+                                <input id="precise_search_with" class="h25 w200" type="text" />
+                            </div>
+                            <div class="mb15">
+                                <label for="precise_search_without">不含关键词</label>
+                                <input id="precise_search_without" class="h25 w200" type="text" />
+                            </div>
+                        </div>
+                        <div class="fl fs18 white mrg1em">
+                            <input id="precise_selector_search" class="btn h50" type="button" value="搜索" />
+                        </div>
+                    </div>
+                </div>
+                <!-- 关键词选择器 结束 -->
+            </div>
+            <!-- 精准淘词 数据显示模块  end *******************************************************-->
+        </section>
+        <footer>
+            <div id="footer" class="footer ff">
+                <span>杭州匠心网络科技有限公司&nbsp;保留一切权利</span>
+            </div>
+        </footer>
+        <script type="text/javascript" src="./js/lib/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript" src="./js/lib/underscore.js"></script>
+        <script type="text/javascript" src="./js/lib/backbone.js"></script>
+        <script type="text/javascript" src="./js/lib/backbone.localStorage.js"></script>
+        <script type="text/javascript" src="./js/lib/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="./js/lib/ui/jquery.ui.core.js"></script>
+        <script type="text/javascript" src="./js/lib/ui/jquery.ui.widget.js"></script>
+        <script type="text/javascript" src="./js/lib/ui/jquery.ui.mouse.js"></script>
+        <script type="text/javascript" src="./js/lib/ui/jquery.ui.slider.js"></script>
+        <script type="text/javascript" src="./source/jsonData.min.js"></script>
+        
+
+        <script type="text/javascript">
+        $(function () {
+            $(".keywords-table").dataTable();
+        });
+        $(".slider-match").slider({
+            min: 400,
+            max: 1000,
+            values: [ 588, 1000 ],
+            step: 1,
+            slide: function(event, ui) {
+                var as = $(event.target).children("a"),
+                    showMin = $(this).parents(".slider-main").find(".show-min"),
+                    showMax = $(this).parents(".slider-main").find(".show-max");
+
+                if (ui.values[0] === ui.value) {
+                    showMin.val(ui.values[0]);
+                    showMin.css("left", as[0].style.left);
+                } else {
+                    showMax.css("left", as[1].style.left);
+                    showMax.val(ui.values[1]);
+                }
+            }
+        });
+
+        $(".slider-compete").slider({
+            min: 1,
+            max: 1600,
+            values: [ 567, 1600 ],
+            step: 1,
+            slide: function(event, ui) {
+                var as = $(event.target).children("a"),
+                    showMin = $(this).parents(".slider-main").find(".show-min"),
+                    showMax = $(this).parents(".slider-main").find(".show-max");
+
+                if (ui.values[0] === ui.value) {
+                    showMin.val(ui.values[0]);
+                    showMin.css("left", as[0].style.left);
+                } else {
+                    showMax.css("left", as[1].style.left);
+                    showMax.val(ui.values[1]);
+                }
+            }
+        });
+
+        $(".slider-click").slider({
+            min: 0,
+            max: 6000,
+            values: [ 699, 6000 ],
+            step: 1,
+            slide: function(event, ui) {
+                var as = $(event.target).children("a"),
+                    showMin = $(this).parents(".slider-main").find(".show-min"),
+                    showMax = $(this).parents(".slider-main").find(".show-max");
+                
+                if (ui.values[0] === ui.value) {
+                    showMin.val(ui.values[0]);
+                    showMin.css("left", as[0].style.left);
+                } else {
+                    showMax.css("left", as[1].style.left);
+                    showMax.val(ui.values[1]);
+                }
+            }
+        });
+
+        $(".slider-show").slider({
+            min: 0,
+            max: 1000000,
+            values: [ 5880, 1000000 ],
+            step: 1,
+            slide: function(event, ui) {
+                var as = $(event.target).children("a"),
+                    showMin = $(this).parents(".slider-main").find(".show-min"),
+                    showMax = $(this).parents(".slider-main").find(".show-max");
+
+                if (ui.values[0] === ui.value) {
+                    showMin.val(ui.values[0]);
+                    showMin.css("left", as[0].style.left);
+                } else {
+                    showMax.css("left", as[1].style.left);
+                    showMax.val(ui.values[1]);
+                }
+            }
+        });
+
+        $(".slider-price").slider({
+            min: 0.05,
+            max: 8,
+            values: [ 0.5, 8 ],
+            step: 0.05,
+            slide: function(event, ui) {
+                var as = $(event.target).children("a"),
+                    showMin = $(this).parents(".slider-main").find(".show-min"),
+                    showMax = $(this).parents(".slider-main").find(".show-max");
+
+                if (ui.values[0] === ui.value) {
+                    showMin.val(ui.values[0]);
+                    showMin.css("left", as[0].style.left);
+                } else {
+                    showMax.css("left", as[1].style.left);
+                    showMax.val(ui.values[1]);
+                }
+            }
+        });
+
+
+        $(".slider-main").each(function (index) {
+            var slider = $(this).find(".slider"),
+                as = $(slider).children("a"),
+                showMax = $(this).find(".min-max").children(".show-max"),
+                showMin = $(this).find(".min-max").children(".show-min");
+
+            showMin.css("left", as[0].style.left);
+            showMax.css("left", as[1].style.left);
+        });
+
+        $(window).scroll(function () {
+            if ($("body").scrollTop() > 540) {
+                $("#keywords_selector").css({'position': 'fixed', 'top': 0});
+            } else {
+                $("#keywords_selector").css({'position': 'absolute', 'top': 540});
+            }
+        });
+             
+
+        </script>
+
+        <script type="text/template" id="keyword_template">
+            <td><input class="toggle" type="checkbox" <%= selected ? 'checked="checked"' : '' %> /></td>
+            <td><a href="##" class="keyword-link" ><%= keyword %></a></td>
+            <td><%= price %></td>
+            <td><%= showIndex %></td>
+            <td><%= chickIndex %></td>
+            <td><%= competeIndex %></td>
+            <td><%= matchIndex %></td>
+        </script>
+
+        <script type="text/template" id="association_tmpl">
+            <ul class="cf">
+                <li><h4>产品词</h4></li>
+                <% _.each(aboutItem, function (word, index) { %>
+                    <%= index >7 ? '<li class="none">' : '<li>'%><%= word %></li>
+                <% }); %>
+                <% if (aboutItem.length > 8) { %>
+                    <li><a href="#more">更多</a></li>
+                <% } %>
+            </ul>
+            <ul class="cf">
+                <li><h4>修饰词</h4></li>
+                <% _.each(modifier, function (word, index) { %>
+                    <%= index >7 ? '<li class="none">' : '<li>'%><%= word %></li>
+                <% }); %>
+                <% if (modifier.length > 8) { %>
+                    <li><a href="#more">更多</a></li>
+                <% } %>
+            </ul>
+        </script>
+        <script type="text/template" id="table_top_stats">
+            <span>关键词列表:已选中<span class="bold"><%= selectedCount %></span>个关键词</span>
+        </script>
+
+        <script type="text/template" id="item_table_tmpl">
+            <thead>
+                <tr>
+                    <th class="w30per h25"><h2>宝贝标题</h2></th>
+                    <th><h2>宝贝属性</h2></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="item-title">
+                        <div class="mrg1em center" >
+                            <div><img src=<%= '"' + imgSrc + '"' %> alt="item's main image" /></div>
+                            <div><a href=<%= '"' + link + '"' %> /><%= title %></a></div>
+                            <div>￥<strong class="red"><%= price %></strong>&nbsp;&nbsp;&nbsp;&nbsp;库存：<%= stock %></div>
+                            <div><span class="black">所属类目：<%= catalog %></span></div>
+                        </div>
+                    </td>
+                    <td class="item-properties">
+                        <table class="prop-table w100per noborder">
+                            <tbody>
+                                <tr>
+                                    <td><%= !postFee ? "包邮免邮" : ("邮费：" + postFee) %></td>
+                                    <td>种地类型<%= type %></td>
+                                    <td>图案形状：<%= shape %></td>
+                                </tr>
+                                <tr>
+                                    <td>售后服务：<%= service %></td>
+                                    <td>证书：<%= certificate %></td>
+                                    <td>证书认证表示：<%= certificateSign %></td>
+                                </tr>
+                                <tr>
+                                    <td>镶嵌材料：<%= embed %></td>
+                                    <td>品牌：<%= brand %></td>
+                                    <td>货号：<%= goodNum %></td>
+                                </tr>
+                                <tr>
+                                    <td>价格区间：<%= priceZone %></td>
+                                    <td>款式：<%= style %></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </script>
+        <script type="text/javascript" src="./source/jsonItem.js"></script>
+        <script type="text/javascript" src="./js/item.js"></script>
+        <script type="text/javascript" src="./js/keyword.js"></script>
+        <script type="text/javascript" src="./js/index.js"></script>
+    </body>
+</html>
