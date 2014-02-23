@@ -1,0 +1,1 @@
+var Selector = Backbone.Model.extend({});
