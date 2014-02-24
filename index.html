@@ -61,7 +61,7 @@
                                     </div>
                                     
                                     <div class="mlrauto">
-                                        <input id="quick_select_btn" class="btn mrg1em" type="button" value="开始选词" />
+                                        <input id="quick_select_btn" class="selectbtn btn mrg1em" type="button" value="开始选词" />
                                         <input id="quick_export_btn" class="export btn mrg1em" type="button" value="导出Excel" />
                                         <input id="quick_copy_btn" class="copy btn mrg1em" type="button" value="复制关键词" />
                                     </div>
@@ -75,7 +75,7 @@
                                     <div class="main-words cf mlrauto">
                                         <h3 class="fl"><label for="main_word">含核心词:</label></h3>
                                         <input id="main_word" class="w200 ml15" type="text" />
-                                        <input id="precise_select_btn" class="btn" type="button" value="精确选词"/>
+                                        <input id="precise_select_btn" class="selectbtn btn" type="button" value="精确选词"/>
                                         <input id="precise_export_btn" class="export btn" type="button" value="导出Excel" />
                                         <input id="precise_copy_btn" class="copy btn" type="button" value="复制关键词" />
                                     </div>    
@@ -92,10 +92,10 @@
             </div>
 
             <!-- 快速淘词  数据显示模块*******************************************************-->
-            <div id="list_wrap_quick" class="none">
+            <div id="list_wrap_quick" class="list-wrap none">
 
                 <!-- 关键词列表 -->
-                <div id="quick_keywords_list" class="keywords-list ">
+                <div id="quick_keywords_list" class="keywords-list">
                     <div id="quick_keywords_list_top" class="keywords-list-top">
                         <div id="quick_table_selected_stats" class="list-top-title">
                             <span>关键词列表:已选中<span>300</span>个关键词</span>
@@ -286,12 +286,12 @@
             <!-- 快速淘词 数据显示模块  end *******************************************************-->
 
             <!-- 精准淘词 数据显示模块  start *******************************************************-->
-            <div id="list_wrap_precise" class="none">
+            <div id="list_wrap_precise" class="list-wrap none">
 
                 <!-- 关键词列表 -->
                 <div id="precise_keywords_list" class="keywords-list ">
                     <div id="precise_keywords_list_top">
-                        <div id="precise_table_selected_stats" class="title">
+                        <div id="precise_table_selected_stats" class="list-top-title">
                             <span>关键词列表:已选中<span>300</span>个关键词</span>
                         </div>
                     </div>
@@ -300,7 +300,7 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        <input id="precise_all_select" type="checkbox" />
+                                        <input id="precise_all_select" class="all-select" type="checkbox" />
                                     </th>
                                     <th>关键词</th>
                                     <th>市场均价</th>
@@ -383,7 +383,7 @@
                             <h3 class="fl">点击指数</h3>
                             <div class="precise_slider-main fl h40 pd-top20 pd-left10">
                                 <div class="w300">
-                                    <div id="slider_click" class="slider slider-click"></div>
+                                    <div id="precise_slider_click" class="slider slider-click"></div>
                                     <div class="rule p-relative">
                                         <span class="p-absolute left0 fs5">|</span>
                                         <span class="p-absolute left0 top10">0</span>
@@ -493,13 +493,11 @@
         <script type="text/javascript" src="./js/lib/ui/jquery.ui.widget.js"></script>
         <script type="text/javascript" src="./js/lib/ui/jquery.ui.mouse.js"></script>
         <script type="text/javascript" src="./js/lib/ui/jquery.ui.slider.js"></script>
-        <script type="text/javascript" src="./source/jsonData.min.js"></script>
+        <script type="text/javascript" src="./source/jsonkeyword.min.js"></script>
         
 
         <script type="text/javascript">
-        $(function () {
-            $(".keywords-table").dataTable();
-        });
+        
         $(".slider-match").slider({
             min: 400,
             max: 1000,
@@ -623,7 +621,7 @@
         </script>
 
         <script type="text/template" id="keyword_template">
-            <td><input class="toggle" type="checkbox" <%= selected ? 'checked="checked"' : '' %> /></td>
+            <td class="center"><input class="toggle" type="checkbox" <%= selected ? 'checked="checked"' : '' %> /></td>
             <td><a href="##" class="keyword-link" ><%= keyword %></a></td>
             <td><%= price %></td>
             <td><%= showIndex %></td>
@@ -636,19 +634,21 @@
             <ul class="cf">
                 <li><h4>产品词</h4></li>
                 <% _.each(aboutItem, function (word, index) { %>
-                    <%= index >7 ? '<li class="none">' : '<li>'%><%= word %></li>
+                    <%= index >7 ? '<li class="hidden-li none">' : '<li>'%><%= word %></li>
                 <% }); %>
                 <% if (aboutItem.length > 8) { %>
-                    <li><a href="#more">更多</a></li>
+                    <li><input class="btn-small" type="button" value="更多" /></li>
+                    <li><input class="btn-small none" type="button" value="收起" /></li>
                 <% } %>
             </ul>
             <ul class="cf">
                 <li><h4>修饰词</h4></li>
                 <% _.each(modifier, function (word, index) { %>
-                    <%= index >7 ? '<li class="none">' : '<li>'%><%= word %></li>
+                    <%= index >7 ? '<li class="hidden-li none">' : '<li>'%><%= word %></li>
                 <% }); %>
                 <% if (modifier.length > 8) { %>
-                    <li><a href="#more">更多</a></li>
+                    <li><input class="btn-small" type="button" value="更多" /></li>
+                    <li><input class="btn-small none" type="button" value="收起" /></li>                
                 <% } %>
             </ul>
         </script>
@@ -706,5 +706,6 @@
         <script type="text/javascript" src="./js/item.js"></script>
         <script type="text/javascript" src="./js/keyword.js"></script>
         <script type="text/javascript" src="./js/index.js"></script>
+
     </body>
 </html>
