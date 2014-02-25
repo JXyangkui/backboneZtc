@@ -26,7 +26,7 @@ Ztc.Views.ZtcView = Backbone.View.extend({
             alert("请填写正确的网址");
             return;
         }
-        d = iptValue.match(/(id=)\d+/)[0].slice(3),
+        id = iptValue.match(/(id=)\d+/)[0].slice(3),
         itemModel = new Ztc.Models.Item().getItem(id);
 
     	//返回数据后 render,  Data:itemJSON
