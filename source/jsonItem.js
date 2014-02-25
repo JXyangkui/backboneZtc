@@ -1,4 +1,5 @@
-var itemJSON = {
+Ztc.Source.itemJSON = {
+    id:              "36562212670",
     title:           "之玉珠宝 天然A货云南缅甸糯种翡翠手镯七彩圆条玉镯包邮带证书",
     link:            "http://detail.tmall.com/item.htm?spm=a2106.m5061.1000384.7.QCRGLK&amp;id=36562212670",
     imgSrc:          "http://img04.taobaocdn.com/bao/uploaded/i4/T1oiEtFXlcXXXXXXXX_!!0-item_pic.jpg_200x200.jpg",
