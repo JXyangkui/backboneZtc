@@ -50,26 +50,13 @@ Ztc.Views.ItemWrapView = Backbone.View.extend({
             this.$el.find(".toggle-tab").toggleClass("white bgwhite");
             this.$el.find(".tab-bd").toggleClass("none");
 
-            var moduleName = target.id.split("_")[0];
-
-            if (target.id === "quick_tab") {
-
-                if (this.quickTabBd.quickKeyWordListView) {
-                    this.quickTabBd.keyWordListForQuickView.toggleDisplay();
-                }
-                if (this.preciseTabBd.preciseKeyWordListView) {
-                    this.preciseTabBd.keyWordListForPreciseView.toggleDisplay();
-                }
-            } else if (target.id === "precise_tab") {
-
-                if (this.preciseTabBd.keyWordListForPreciseView) {
-                    this.preciseTabBd.keyWordListForPreciseView.toggleDisplay();
-                }
-                
-                if (this.quickTabBd.keyWordListForQuickView) {
-                    this.quickTabBd.keyWordListForQuickView.toggleDisplay();
-                }
+            if (this.quickTabBd.quickKeywordListView) {
+                this.quickTabBd.quickKeywordListView.toggleDisplay();
             }
+            if (this.preciseTabBd.preciseKeywordListView) {
+                this.preciseTabBd.preciseKeywordListView.toggleDisplay();
+            }
+            
         }
 
     }
@@ -85,33 +72,17 @@ Ztc.Views.SelectTabBd = Backbone.View.extend({
     },
 
     selectAjax: function (e) {
-        //ajax....request TODO...
-
-        //response
         e = e || window.event;
-        var target = e.target || e.srcElement;
-        console.log(target);
-        if (target.id === "quick_select_btn") {
-            console.log("quick_select_btn");
+        var target = e.target || e.srcElement,
+			moduleName = target.id.split("_")[0];
 
-            // this.keyWordsForQuick = new KeyWordList(quickData);
-            // this.keyWordListForQuickView = new KeyWordListView({el: "#list_wrap_quick", collection: this.keyWordsForQuick});
-            
-            // this.keyWordListForQuickView.addAll(this.keyWordsForQuick);
-            
-            // this.keyWordListForQuickView.$el.removeClass("none");
-            // this.keyWordListForQuickView.bulidTable();
+		var keywords = (new Ztc.Collections.KeywordList).getKeywords(moduleName);// 这里还需要一些其他合适的参数
 
-        } else if (target.id === "precise_select_btn") {
-            console.log("precise_select_btn");
-
-            // this.keywordsForPrecise = new KeyWordList(preciseData);
-            // this.keyWordListForPreciseView = new KeyWordListView({el: "#list_wrap_precise", collection: this.keywordsForPrecise});
-
-            // this.keyWordListForPreciseView.addAll(this.keywordsForPrecise);
-            // this.keyWordListForPreciseView.$el.removeClass("none");
-            // this.keyWordListForPreciseView.bulidTable();
-        }
+        this[moduleName + "KeywordListView"] = new Ztc.Views.KeywordListView({el: "#list_wrap_" + moduleName, collection: keywords});
+        this[moduleName + "KeywordListView"].addAll(keywords);
+        
+        this[moduleName + "KeywordListView"].$el.removeClass("none");
+        this[moduleName + "KeywordListView"].bulidTable();
     },
 
     export: function () {
