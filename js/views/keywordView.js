@@ -18,7 +18,7 @@ Ztc.Views.KeywordView = Backbone.View.extend({
 	},
 
 	toggleSelected: function () {
-		this.model.toggle();
+		this.model.toggleChecked();
 	}
 });
 
@@ -36,7 +36,7 @@ Ztc.Views.KeywordListView = Backbone.View.extend({
 		this.keywordTbody = this.$(".keywords-table").find("tbody");
 		this.fragment = document.createDocumentFragment();
 
-		this.listenTo(this.collection, "all", this.render);
+		this.listenTo(this.collection, "change", this.render);
 
 	},
 
@@ -48,13 +48,7 @@ Ztc.Views.KeywordListView = Backbone.View.extend({
 		this.allCheckbox.checked = (selectedCount === total);
 	},
 
-	addOne: function (keyword) {
-		var view = new KeyWordView({model: keyword});
-
-		this.keywordTbody.append(view.render().el);
-	},
-
-	addAll: function (keywords) {
+	addToTbody: function (keywords) {
 		
 		keywords.each(function (keyword) {
     	

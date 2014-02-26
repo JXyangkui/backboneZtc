@@ -79,7 +79,7 @@ Ztc.Views.SelectTabBd = Backbone.View.extend({
 		var keywords = (new Ztc.Collections.KeywordList).getKeywords(moduleName);// 这里还需要一些其他合适的参数
 
         this[moduleName + "KeywordListView"] = new Ztc.Views.KeywordListView({el: "#list_wrap_" + moduleName, collection: keywords});
-        this[moduleName + "KeywordListView"].addAll(keywords);
+        this[moduleName + "KeywordListView"].addToTbody(keywords);
         
         this[moduleName + "KeywordListView"].$el.removeClass("none");
         this[moduleName + "KeywordListView"].bulidTable();

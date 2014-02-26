@@ -13,7 +13,7 @@ Ztc.Models.Keyword = Backbone.Model.extend({
 	},
 
 	// selected and unselected toggle
-	toggle: function () {
+	toggleChecked: function () {
 		this.set({selected: !this.get("selected")});
 	}
 });
