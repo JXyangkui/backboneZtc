@@ -3,9 +3,9 @@ Ztc.Models.Keyword = Backbone.Model.extend({
 
 		return {
 			keyword: "keyWord",
-			price: 0.05,
-			showIndex: 0,
-			chickIndex: 0,
+			averagePrice: 0.05,
+			pageView: 0,
+			clickIndex: 0,
 			competeIndex: 0,
 			matchIndex: 0,
 			selected: false

@@ -25,6 +25,7 @@ Ztc.Views.KeywordView = Backbone.View.extend({
 Ztc.Views.KeywordListView = Backbone.View.extend({
 
 	topTemplate: _.template($("#table_top_stats").html()),
+	sliderTop: _.template($("#selector_slider_stats_tmpl").html()),
 
 	events: {
 			"click .all-select": "selectAllKeywords"
@@ -42,10 +43,13 @@ Ztc.Views.KeywordListView = Backbone.View.extend({
 
 	render: function () {
 		var selectedCount = this.collection.selected().length,
-		    total = this.collection.length;
+		    total = this.collection.length,
+		    selectednum = this.collection.where({selected: true}).length;
 
 		this.selectedStats.html(this.topTemplate({selectedCount: selectedCount}));
 		this.allCheckbox.checked = (selectedCount === total);
+		this.$el.parent().find(".selector-slider-top").html(this.sliderTop({total: total, selectedNum: selectednum}));
+
 	},
 
 	addToTbody: function (keywords) {
@@ -65,7 +69,7 @@ Ztc.Views.KeywordListView = Backbone.View.extend({
 	},
 
 	bulidTable: function () {
-		this.$el.find(".keywords-table").dataTable();
+		this.$(".keywords-table").dataTable();
 	},
 
 	selectAllKeywords: function () {

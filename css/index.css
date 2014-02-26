@@ -86,7 +86,7 @@ h1 span {vertical-align: top;}
 
 .item, .select-keywords-module, .keywords-list {width: 80%; margin-bottom: 5px;}
 
-.keywords-selector {background-color: #ffffff; width: 40%; float: right; border: 1px solid #fed943; position: absolute; top: 540px; right: 0;}
+.keywords-selector {background-color: #ffffff; width: 35%; float: right; border: 1px solid #fed943; position: absolute; top: 360px; right: 0;}
 
 .item .tbl {width: 100%;}
 .tbl h2 {margin: 0;}

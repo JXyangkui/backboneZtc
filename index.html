@@ -122,6 +122,8 @@
                     </div>
                 </div>
                 <!-- 关键词列表 结束 -->
+
+                <!-- 选词器 开始******************** -->
             </div>
             <!-- 快速淘词 数据显示模块  end *******************************************************-->
 
@@ -172,16 +174,6 @@
         <script type="text/javascript" src="./js/lib/ui/jquery.ui.widget.js"></script>
         <script type="text/javascript" src="./js/lib/ui/jquery.ui.mouse.js"></script>
         <script type="text/javascript" src="./js/lib/ui/jquery.ui.slider.js"></script>
-
-        <script type="text/javascript">
-        $(window).scroll(function () {
-            if ($("body").scrollTop() > 540) {
-                $("#keywords_selector").css({'position': 'fixed', 'top': 0});
-            } else {
-                $("#keywords_selector").css({'position': 'absolute', 'top': 540});
-            }
-        });
-        </script>
 
         <script type="text/template" id="association_tmpl">
             <ul class="cf">
@@ -259,11 +251,50 @@
         <script type="text/template" id="keyword_template">
             <td class="center"><input class="toggle" type="checkbox" <%= selected ? 'checked="checked"' : '' %> /></td>
             <td><a href="##" class="keyword-link" ><%= keyword %></a></td>
-            <td><%= price %></td>
-            <td><%= showIndex %></td>
-            <td><%= chickIndex %></td>
+            <td><%= averagePrice %></td>
+            <td><%= pageView %></td>
+            <td><%= clickIndex %></td>
             <td><%= competeIndex %></td>
             <td><%= matchIndex %></td>
+        </script>
+
+        <script type="text/template" id="selector_tmpl">
+            <h2 class="white">选词器<span class="fs12">(拉动滑竿可过滤关键)</span></h2>
+                <div class="selector-slider-top ml15 fblack mb15">
+                    <span>候选词总数：<span class="bold">388</span>个 &nbsp;&nbsp;已选中：<span class="red">88</span>个</span>
+                </div>
+            <div id="<%= moduleName %>_sliders" class="sliders">
+            <% _.each(selector, function (value, key) {%>
+                <div class="slider-wrap">
+                    <h3 class="fl"><%= value.name %></h3>
+                    <div class="slider-main fl h40 pd-top20 pd-left10">
+                        <div class="w300">
+                            <div id="<%= moduleName %>_slider_<%= key %>" class="slider slider-<%= key %>"></div>
+                            <div class="rule p-relative">
+                                <span class="p-absolute left0 fs5">|</span>
+                                <span class="p-absolute left0 top10"><%= value.min %></span>
+                                <span class="p-absolute left25 fs5">|</span>
+                                <span class="p-absolute left25 top10"><%= (value.max - value.min) / 4 %></span>
+                                <span class="p-absolute left50 fs5">|</span>
+                                <span class="p-absolute left50 top10"><%= (value.max - value.min) / 2 %></span>
+                                <span class="p-absolute left75 fs5">|</span>
+                                <span class="p-absolute left75 top10"><%= (value.max - value.min) * 3 / 4 %></span>
+                                <span class="p-absolute left100 fs5">|</span>
+                                <span class="p-absolute left100 top10"><%= value.max %></span>
+                            </div>
+                            <div class="min-max w300 h25 p-relative">
+                                <input class="<%= moduleName + '-' + key + '-min'%> show-min noborder w60 p-absolute top-35" type="text" value=<%= '"' + value.values[0] + '"'%>/>
+                                <input class="<%= moduleName + '-' + key + '-max'%> show-max noborder w60 p-absolute top-35" type="text" value=<%= '"' + value.values[1] + '"'%>/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+            </div>
+        </script>
+
+        <script type="text/template" id="selector_slider_stats_tmpl">
+            <span>候选词总数：<span class="bold"><%= total %></span>个 &nbsp;&nbsp;已选中：<span class="red"><%= selectedNum %></span>个</span>
         </script>
 
         <script type="text/javascript" src="./js/init.js"></script>
@@ -272,10 +303,21 @@
         <script type="text/javascript" src="./js/models/keywordModel.js"></script>
         <script type="text/javascript" src="./js/views/keywordView.js"></script>
         <script type="text/javascript" src="./js/collections/keywordCollection.js"></script>
+        <script type="text/javascript" src="./js/models/selectorModel.js"></script>
+        <script type="text/javascript" src="./js/views/selectorView.js"></script>
         <script type="text/javascript" src="./js/models/itemModel.js"></script>
         <script type="text/javascript" src="./js/views/itemView.js"></script>
         <script type="text/javascript" src="./js/ztcMainView.js"></script>
         <script type="text/javascript" src="./js/index.js"></script>
 
+        <script type="text/javascript">
+        $(window).scroll(function () {
+            if ($("body").scrollTop() > 360) {
+                $(".keywords-selector").css({'position': 'fixed', 'top': 0});
+            } else {
+                $(".keywords-selector").css({'position': 'absolute', 'top': 360});
+            }
+        });
+        </script>
     </body>
 </html>

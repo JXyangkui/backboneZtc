@@ -65,24 +65,35 @@ Ztc.Views.ItemWrapView = Backbone.View.extend({
 Ztc.Views.SelectTabBd = Backbone.View.extend({
 
     events: {
-        "click .selectbtn": "selectAjax",
+        "click .selectbtn": "showKeywordsWrap",
         "click .export": "export",
         "click .copy": "copy",
         "click .btn-small": "toggleMoreOrLess"
     },
 
-    selectAjax: function (e) {
+    showKeywordsWrap: function (e) {
         e = e || window.event;
         var target = e.target || e.srcElement,
 			moduleName = target.id.split("_")[0];
 
-		var keywords = (new Ztc.Collections.KeywordList).getKeywords(moduleName);// 这里还需要一些其他合适的参数
+		var keywords = (new Ztc.Collections.KeywordList).getKeywords(moduleName),// 这里还需要一些其他合适的参数
+            selectorModel = new Ztc.Models.Selector(keywords.bulidSelector());
 
-        this[moduleName + "KeywordListView"] = new Ztc.Views.KeywordListView({el: "#list_wrap_" + moduleName, collection: keywords});
+        keywords.comparator = "pageView";
+        keywords.sort();
+        //往list table中添加数据并append到文档流
+        this[moduleName + "KeywordListView"] = new Ztc.Views.KeywordListView({el: "#" + moduleName + "_keywords_list", collection: keywords});
         this[moduleName + "KeywordListView"].addToTbody(keywords);
-        
-        this[moduleName + "KeywordListView"].$el.removeClass("none");
+
+        //构建 selector
+        this[moduleName + "SelectorView"] = new Ztc.Views.SelectorView({id: moduleName + "_keywords_selector", className: "keywords-selector", model: selectorModel, collection: keywords});
+        this[moduleName + "KeywordListView"].$el.parent().append(this[moduleName + "SelectorView"].render().el);
+
+        this[moduleName + "KeywordListView"].render();
+
+        this[moduleName + "KeywordListView"].$el.parent().removeClass("none");
         this[moduleName + "KeywordListView"].bulidTable();
+        this[moduleName + "SelectorView"].bulidSelectorSlider();
     },
 
     export: function () {
