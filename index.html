@@ -9,6 +9,9 @@
         <link rel="stylesheet" type="text/css" href="./css/reset.css">
         <link rel="stylesheet" type="text/css" href="./css/index.css">
         <link rel="stylesheet" type="text/css" href="./css/jquery-ui-1.9.2.custom.min.css">
+
+        <script type="text/javascript" src="js/seajs/sea.js,shim.js"></script>
+        <script type="text/javascript" src="js/seajs-config.js"></script>
     </head>
     <body>
         <header>
@@ -21,7 +24,6 @@
                 </h1>
                 <div class="warn-wrap">
                     <ul class="warn">
-                        <li>说明： 请选择店铺中的一款宝贝，并复制宝贝链接粘贴到输入框， 再点击“选词预览”。</li>
                         <li>注意： 本软件仅供选词效果预览，暂时免费无限制使用。 同时因为词量可能很大，强烈建议使用谷歌浏览器。</li>
                     </ul>
                 </div>
@@ -29,127 +31,37 @@
                     <fieldset class="search-wrap">
                         <form id="search_form" class="search-form">
                             <label for="search_box"> 宝贝链接:</label>
-                            <input id="search_box" class="search-box" type="text">
+                            <input id="search_box" class="search-box" type="text" />
+                            <input id="prev_value" type="hidden" />
                             <input id="select_view_btn" type="button" value="选词预览&nbsp;&gt;&gt;" class="btn" />
                         </form>
                     </fieldset>
                 </div>
             </div>
         </header>
-        <section class="keywords-main">
-            <div id="item_wrap" class="none">
+        <section id="bd" class="keywords-main none">
+            <div id="item_wrap">
                 <!-- 宝贝属性 -->
                 <div id="item" class="item"></div>
                 <!-- 宝贝属性 结束 -->
-
-                <!-- 关键词选择模式 -->
-                <div id="select_keywords_module" class="select-keywords-module p-relative h200">
-                    <div id="tab_top" class="tab-top"></div>
-
-                    <div id="tab_body" class="tab-body w100per">
-                        <div>
-                            <form id="quick_select" class="quick-select mlrauto w70per cf">
-                                <h2 id="quick_tab" class="toggle-tab bgwhite w90 h40 center">快速选词</h2>
-                                <div id="quick_tab_bd" class="tab-bd w70per mlrauto">
-                                    <div class="mlrauto cf">
-                                        <h3 class="fl">选词模式:</h3>
-                                        <div class="mrg1em">
-                                            <input class="ml15" type="radio" name="select_module" checked="true"/>&nbsp;<span>系统默认</span>
-                                            <input class="ml15" type="radio" name="select_module" />&nbsp;<span>精准模式</span>
-                                            <input class="ml15" type="radio" name="select_module" />&nbsp;<span>流量模式</span>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="mlrauto">
-                                        <input id="quick_select_btn" class="selectbtn btn mrg1em" type="button" value="开始选词" />
-                                        <input id="quick_export_btn" class="export btn mrg1em" type="button" value="导出Excel" />
-                                        <input id="quick_copy_btn" class="copy btn mrg1em" type="button" value="复制关键词" />
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div>
-                            <form id="precise_select" class="precise-select w100per cf">
-                                <h2 id="precise_tab" class="toggle-tab lf90 white w90 h40 center">精准选词</h2>
-                                <div id="precise_tab_bd" class="tab-bd w70per mlrauto none">
-                                    <div class="main-words cf mlrauto">
-                                        <h3 class="fl"><label for="main_word">含核心词:</label></h3>
-                                        <input id="main_word" class="w200 ml15" type="text" />
-                                        <input id="precise_select_btn" class="selectbtn btn" type="button" value="精确选词"/>
-                                        <input id="precise_export_btn" class="export btn" type="button" value="导出Excel" />
-                                        <input id="precise_copy_btn" class="copy btn" type="button" value="复制关键词" />
-                                    </div>    
-                                    <div id="guess_for_you" class="guess-for-you fl">
-                                        <h3 class="fl">猜你想淘:</h3>
-                                        <div id="association" class="fl dotted-border mb15 ml15"></div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <!-- 关键词选择模式 结束 -->
             </div>
 
-            <!-- 快速淘词  数据显示模块*******************************************************-->
-            <div id="list_wrap_quick" class="list-wrap none">
+            <div id="list_wrap" class="list-wrap">
 
                 <!-- 关键词列表 -->
-                <div id="quick_keywords_list" class="keywords-list">
-                    <div id="quick_keywords_list_top" class="keywords-list-top">
-                        <div id="quick_table_selected_stats" class="list-top-title">
-                            <span>关键词列表:已选中<span>300</span>个关键词</span>
-                        </div>
+                <div id="keywords_list" class="keywords-list">
+                    <div id="keywords_list_top" class="keywords-list-top">
                     </div>
-                    <div id="quick_keywords_table_wrap">
-                        <table id="quick_keywords_table" class="keywords-table tbl w100per ">
+                    <div id="keywords_table_wrap">
+                        <table id="keywords_table" class="keywords-table tbl w100per ">
                             <thead>
                                 <tr>
-                                    <th>
-                                        <input id="quick_all_select" class="all-select" type="checkbox" />
-                                    </th>
                                     <th>关键词</th>
                                     <th>市场均价</th>
                                     <th>展现指数</th>
                                     <th>点击指数</th>
                                     <th>竞争度</th>
-                                    <th>匹配度</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <!-- 关键词列表 结束 -->
-
-                <!-- 选词器 开始******************** -->
-            </div>
-            <!-- 快速淘词 数据显示模块  end *******************************************************-->
-
-            <!-- 精准淘词 数据显示模块  start *******************************************************-->
-            <div id="list_wrap_precise" class="list-wrap none">
-
-                <!-- 关键词列表 -->
-                <div id="precise_keywords_list" class="keywords-list ">
-                    <div id="precise_keywords_list_top">
-                        <div id="precise_table_selected_stats" class="list-top-title">
-                            <span>关键词列表:已选中<span>300</span>个关键词</span>
-                        </div>
-                    </div>
-                    <div id="precise_keywords_table_wrap">
-                        <table id="precise_keywords_table" class="keywords-table tbl w100per ">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <input id="precise_all_select" class="all-select" type="checkbox" />
-                                    </th>
-                                    <th>关键词</th>
-                                    <th>市场均价</th>
-                                    <th>展现指数</th>
-                                    <th>点击指数</th>
-                                    <th>竞争度</th>
-                                    <th>匹配度</th>
+                                    <th>质量分</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -159,165 +71,51 @@
                 </div>
                 <!-- 关键词列表 结束 -->
             </div>
-            <!-- 精准淘词 数据显示模块  end *******************************************************-->
         </section>
         <footer>
             <div id="footer" class="footer ff">
                 <span>杭州匠心网络科技有限公司&nbsp;保留一切权利</span>
             </div>
         </footer>
-        <script type="text/javascript" src="./js/lib/jquery-1.11.0.min.js"></script>
-        <script type="text/javascript" src="./js/lib/underscore.js"></script>
-        <script type="text/javascript" src="./js/lib/backbone.js"></script>
-        <script type="text/javascript" src="./js/lib/jquery.dataTables.min.js"></script>
-        <script type="text/javascript" src="./js/lib/ui/jquery.ui.core.js"></script>
-        <script type="text/javascript" src="./js/lib/ui/jquery.ui.widget.js"></script>
-        <script type="text/javascript" src="./js/lib/ui/jquery.ui.mouse.js"></script>
-        <script type="text/javascript" src="./js/lib/ui/jquery.ui.slider.js"></script>
-
-        <script type="text/template" id="association_tmpl">
-            <ul class="cf">
-                <li><h4>产品词</h4></li>
-                <% _.each(aboutItem, function (word, index) { %>
-                    <%= index >7 ? '<li class="hidden-li none">' : '<li>'%><%= word %></li>
-                <% }); %>
-                <% if (aboutItem.length > 8) { %>
-                    <li><input class="btn-small" type="button" value="更多" /></li>
-                    <li><input class="btn-small none" type="button" value="收起" /></li>
-                <% } %>
-            </ul>
-            <ul class="cf">
-                <li><h4>修饰词</h4></li>
-                <% _.each(modifier, function (word, index) { %>
-                    <%= index >7 ? '<li class="hidden-li none">' : '<li>'%><%= word %></li>
-                <% }); %>
-                <% if (modifier.length > 8) { %>
-                    <li><input class="btn-small" type="button" value="更多" /></li>
-                    <li><input class="btn-small none" type="button" value="收起" /></li>                
-                <% } %>
-            </ul>
-        </script>
-        <script type="text/template" id="table_top_stats">
-            <span>关键词列表:已选中<span class="bold"><%= selectedCount %></span>个关键词</span>
-        </script>
 
         <script type="text/template" id="item_table_tmpl">
-            <thead>
-                <tr>
-                    <th class="w30per h25"><h2>宝贝标题</h2></th>
-                    <th><h2>宝贝属性</h2></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="item-title">
-                        <div class="mrg1em center" >
-                            <div><img src=<%= '"' + imgSrc + '"' %> alt="item's main image" /></div>
-                            <div><a href=<%= '"' + link + '"' %> /><%= title %></a></div>
-                            <div>￥<strong class="red"><%= price %></strong>&nbsp;&nbsp;&nbsp;&nbsp;库存：<%= stock %></div>
-                            <div><span class="black">所属类目：<%= catalog %></span></div>
-                        </div>
-                    </td>
-                    <td class="item-properties">
-                        <table class="prop-table w100per noborder">
-                            <tbody>
-                                <tr>
-                                    <td><%= !postFee ? "包邮免邮" : ("邮费：" + postFee) %></td>
-                                    <td>种地类型<%= type %></td>
-                                    <td>图案形状：<%= shape %></td>
-                                </tr>
-                                <tr>
-                                    <td>售后服务：<%= service %></td>
-                                    <td>证书：<%= certificate %></td>
-                                    <td>证书认证表示：<%= certificateSign %></td>
-                                </tr>
-                                <tr>
-                                    <td>镶嵌材料：<%= embed %></td>
-                                    <td>品牌：<%= brand %></td>
-                                    <td>货号：<%= goodNum %></td>
-                                </tr>
-                                <tr>
-                                    <td>价格区间：<%= priceZone[0] %> - <%= priceZone[1] %></td>
-                                    <td>款式：<%= style %></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-            </tbody>
+            <table class="tbl" id="item_table" >
+                <thead>
+                    <tr>
+                        <th class="w30per h25"><h2>宝贝标题</h2></th>
+                        <th><h2>宝贝属性</h2></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="item-title">
+                            <div class="mrg1em center" >
+                                <div><img src=<%= '"' + pic_url + '_210x210.jpg"' %> alt="item's main image" /></div>
+                                <div><a href=<%= '"' + detail_url + '"' %> /><%= title %></a></div>
+                                <div>￥<strong class="red"><%= price %></strong></div>
+                            </div>
+                        </td>
+                        <td class="item-properties">
+                            <table class="prop-table w100per noborder">
+                                <tbody id="props_tbody">
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </script>
 
         <script type="text/template" id="keyword_template">
-            <td class="center"><input class="toggle" type="checkbox" <%= selected ? 'checked="checked"' : '' %> /></td>
-            <td><a href="##" class="keyword-link" ><%= keyword %></a></td>
-            <td><%= averagePrice %></td>
-            <td><%= pageView %></td>
-            <td><%= clickIndex %></td>
-            <td><%= competeIndex %></td>
-            <td><%= matchIndex %></td>
+            <td><%= bidword %></td>
+            <td><%= avg_price %></td>
+            <td><%= pv %></td>
+            <td><%= click %></td>
+            <td><%= compete %></td>
+            <td><%= score %></td>
         </script>
-
-        <script type="text/template" id="selector_tmpl">
-            <h2 class="white">选词器<span class="fs12">(拉动滑竿可过滤关键)</span></h2>
-                <div class="selector-slider-top ml15 fblack mb15">
-                    <span>候选词总数：<span class="bold">388</span>个 &nbsp;&nbsp;已选中：<span class="red">88</span>个</span>
-                </div>
-            <div id="<%= moduleName %>_sliders" class="sliders">
-            <% _.each(selector, function (value, key) {%>
-                <div class="slider-wrap">
-                    <h3 class="fl"><%= value.name %></h3>
-                    <div class="slider-main fl h40 pd-top20 pd-left10">
-                        <div class="w300">
-                            <div id="<%= moduleName %>_slider_<%= key %>" class="slider slider-<%= key %>"></div>
-                            <div class="rule p-relative">
-                                <span class="p-absolute left0 fs5">|</span>
-                                <span class="p-absolute left0 top10"><%= value.min %></span>
-                                <span class="p-absolute left25 fs5">|</span>
-                                <span class="p-absolute left25 top10"><%= (value.max - value.min) / 4 %></span>
-                                <span class="p-absolute left50 fs5">|</span>
-                                <span class="p-absolute left50 top10"><%= (value.max - value.min) / 2 %></span>
-                                <span class="p-absolute left75 fs5">|</span>
-                                <span class="p-absolute left75 top10"><%= (value.max - value.min) * 3 / 4 %></span>
-                                <span class="p-absolute left100 fs5">|</span>
-                                <span class="p-absolute left100 top10"><%= value.max %></span>
-                            </div>
-                            <div class="min-max w300 h25 p-relative">
-                                <input class="<%= moduleName + '-' + key + '-min'%> show-min noborder w60 p-absolute top-35" type="text" value=<%= '"' + value.values[0] + '"'%>/>
-                                <input class="<%= moduleName + '-' + key + '-max'%> show-max noborder w60 p-absolute top-35" type="text" value=<%= '"' + value.values[1] + '"'%>/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <% }) %>
-            </div>
-        </script>
-
-        <script type="text/template" id="selector_slider_stats_tmpl">
-            <span>候选词总数：<span class="bold"><%= total %></span>个 &nbsp;&nbsp;已选中：<span class="red"><%= selectedNum %></span>个</span>
-        </script>
-
-        <script type="text/javascript" src="./js/init.js"></script>
-        <script type="text/javascript" src="./source/jsonkeyword.min.js"></script>
-        <script type="text/javascript" src="./source/jsonItem.js"></script>
-        <script type="text/javascript" src="./js/models/keywordModel.js"></script>
-        <script type="text/javascript" src="./js/views/keywordView.js"></script>
-        <script type="text/javascript" src="./js/collections/keywordCollection.js"></script>
-        <script type="text/javascript" src="./js/models/selectorModel.js"></script>
-        <script type="text/javascript" src="./js/views/selectorView.js"></script>
-        <script type="text/javascript" src="./js/models/itemModel.js"></script>
-        <script type="text/javascript" src="./js/views/itemView.js"></script>
-        <script type="text/javascript" src="./js/ztcMainView.js"></script>
-        <script type="text/javascript" src="./js/index.js"></script>
-
         <script type="text/javascript">
-        $(window).scroll(function () {
-            if ($("body").scrollTop() > 360) {
-                $(".keywords-selector").css({'position': 'fixed', 'top': 0});
-            } else {
-                $(".keywords-selector").css({'position': 'absolute', 'top': 360});
-            }
-        });
+            seajs.use('AppView');
         </script>
     </body>
 </html>

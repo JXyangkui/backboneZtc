@@ -1,19 +1,21 @@
-Ztc.Models.Keyword = Backbone.Model.extend({
-	defaults: function () {
+define(function(require, exports, module) {
 
-		return {
-			keyword: "keyWord",
-			averagePrice: 0.05,
-			pageView: 0,
-			clickIndex: 0,
-			competeIndex: 0,
-			matchIndex: 0,
-			selected: false
-		};
-	},
+	var Backbone = require('Backbone'),
+	    Keyword_model;
 
-	// selected and unselected toggle
-	toggleChecked: function () {
-		this.set({selected: !this.get("selected")});
-	}
+	Keyword_model = Backbone.Model.extend({
+		defaults: function () {
+			return {
+				bidword: "keyWord",
+				avg_price: 0.05,
+				pv: 0,
+				click: 0,
+				compete: 0,
+				score: 0
+			};
+		}
+	});
+
+	module.exports = Keyword_model;
+
 });
