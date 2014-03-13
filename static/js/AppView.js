@@ -70,7 +70,7 @@ define(function(require, exports, module) {
             this.$('#bd').hide();
             this.$('.fixedHeader').remove();
             this.setSectionHeight();
-            this.$el.showLoading();
+            this.$el.showLoading({'text': "正在加载数据"});
 
             var iptValue = this.$("#search_box").val(),
                 self = this,
